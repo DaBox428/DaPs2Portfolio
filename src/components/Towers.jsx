@@ -1,6 +1,7 @@
 import { createRoot } from "react-dom/client";
 import * as THREE from "three";
 import React, { useRef, useState } from "react";
+import { useControls } from "leva";
 
 const towerQuantity = 45;
 const maxTowerHeight = 80;
@@ -73,15 +74,33 @@ function removeTowerFromMiddle() {
     }
   });
 }
+
 const Towers = (props) => {
   generateTowersArray();
   removeTowerFromMiddle();
-  console.log(towersArray);
+
+  const materialProps = useControls({
+    color: "#5f5b9a",
+    position: { value: [7, 8, 7], min: 0, max: 100 },
+    intensity: { value: 13, min: 0, max: 20 },
+  });
 
   return (
     <>
       <ambientLight intensity={0.3} />
-      <directionalLight color="white" position={[0, 0, 5]} intensity={0.7} />
+      <directionalLight {...materialProps} />
+
+      <directionalLight
+        position={[-5, -5, 50]}
+        intensity={18}
+        color={0x000000}
+      />
+
+      <directionalLight
+        position={[-5, -5, 120]}
+        intensity={9}
+        color={0x363636}
+      />
 
       {towersArray.map((item) => {
         return (

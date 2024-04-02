@@ -2,11 +2,8 @@ import React from "react";
 
 function MemoryCard({ handleChangeScreen }) {
   return (
-    <div
-      onClick={() => handleChangeScreen(1)}
-      className="flex h-screen bg-slate-500"
-    >
-      <div className="">memory card</div>
+    <div className="flex h-screen bg-gradient-to-br from-slate-200 to-black-900">
+      memory card
     </div>
   );
 }
