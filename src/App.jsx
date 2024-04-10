@@ -31,7 +31,7 @@ function App() {
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 6000);
+      }, 9000);
     };
     loading();
   }, []);
@@ -168,16 +168,22 @@ function App() {
     useFrame(({ clock, camera }) => {
       camera.position.z = 120 - clock.getElapsedTime() * cameraSpeedPosition;
       camera.rotation.z = 0 - clock.getElapsedTime() * cameraspeedRotation;
-      if (clock.getElapsedTime() > 4) {
+      if (clock.getElapsedTime() > 7) {
         cameraSpeedPosition += 0.4;
         cameraspeedRotation += 0.003;
+        loadingCanvas.current.style = { animation: "fadeOut 0.2s" };
       }
     });
     return null;
   }
   if (isLoading) {
     return (
-      <div ref={loadingCanvas} className={"h-screen bg-black"} id="Towers">
+      <div
+        ref={loadingCanvas}
+        className={"h-screen bg-black"}
+        id="Towers"
+        style={{ animation: "fadeIn 0.3s" }}
+      >
         <Canvas>
           <CameraZoom />
           <Towers></Towers>
