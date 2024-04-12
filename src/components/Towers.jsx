@@ -3,7 +3,7 @@ import * as THREE from "three";
 import React, { useRef, useState } from "react";
 import { useControls } from "leva";
 
-const towerQuantity = 45;
+const towerQuantity = 25;
 const maxTowerHeight = 80;
 const minTowerHeight = 10;
 let towersArray = [];
@@ -79,29 +79,22 @@ const Towers = (props) => {
   generateTowersArray();
   removeTowerFromMiddle();
 
-  const materialProps = useControls({
-    color: "#5f5b9a",
-    position: { value: [7, 8, 7], min: 0, max: 100 },
-    intensity: { value: 13, min: 0, max: 20 },
-  });
-
   return (
     <>
       <ambientLight intensity={0.3} />
-      <directionalLight {...materialProps} />
+
+      <directionalLight color={"#5f5b9a"} position={[7, 8, 7]} intensity={13} />
 
       <directionalLight
         position={[-5, -5, 50]}
         intensity={18}
         color={0x000000}
       />
-
       <directionalLight
         position={[-5, -5, 120]}
         intensity={9}
         color={0x363636}
       />
-
       {towersArray.map((item) => {
         return (
           <mesh

@@ -31,7 +31,7 @@ function App() {
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 9000);
+      }, 9000 /* 9000 */);
     };
     loading();
   }, []);
@@ -184,65 +184,67 @@ function App() {
         id="Towers"
         style={{ animation: "fadeIn 0.3s" }}
       >
-        <Canvas>
-          <CameraZoom />
-          <Towers></Towers>
-          <Cloud
-            position={[0, 0, -25]}
-            speed={0.2}
-            opacity={0.5}
-            scale={[7, 9, 7]}
-            color={new THREE.Color(0x232d61)}
-            seed={1}
-          />
-          <Cloud
-            position={[8, 8, -15]}
-            speed={0}
-            opacity={0.2}
-            scale={[8, 9, 7]}
-            color={new THREE.Color(0x232d61)}
-            seed={1}
-          />
-          <Cloud
-            position={[7, 0, -10]}
-            speed={0}
-            opacity={0.2}
-            scale={[7, 9, 7]}
-            color={new THREE.Color(0x000042)}
-            seed={1}
-          />
-          <Cloud
-            position={[0, 7, -5]}
-            speed={0}
-            opacity={0.2}
-            scale={[7, 7, 7]}
-            color={new THREE.Color(0x000042)}
-            seed={1}
-          />
-          <Cloud
-            position={[0, 0, 0]}
-            speed={0}
-            opacity={0.1}
-            scale={[9, 16, 9]}
-            color={new THREE.Color(0x4062bb)}
-            seed={1}
-          />
+        <Suspense fallback={<span>loading...</span>}>
+          <Canvas>
+            <CameraZoom />
+            <Towers></Towers>
+            <Cloud
+              position={[0, 0, -25]}
+              speed={0.2}
+              opacity={0.5}
+              scale={[7, 9, 7]}
+              color={new THREE.Color(0x232d61)}
+              seed={1}
+            />
+            <Cloud
+              position={[8, 8, -15]}
+              speed={0}
+              opacity={0.2}
+              scale={[8, 9, 7]}
+              color={new THREE.Color(0x232d61)}
+              seed={1}
+            />
+            <Cloud
+              position={[7, 0, -10]}
+              speed={0}
+              opacity={0.2}
+              scale={[7, 9, 7]}
+              color={new THREE.Color(0x000042)}
+              seed={1}
+            />
+            <Cloud
+              position={[0, 7, -5]}
+              speed={0}
+              opacity={0.2}
+              scale={[7, 7, 7]}
+              color={new THREE.Color(0x000042)}
+              seed={1}
+            />
+            <Cloud
+              position={[0, 0, 0]}
+              speed={0}
+              opacity={0.1}
+              scale={[9, 16, 9]}
+              color={new THREE.Color(0x4062bb)}
+              seed={1}
+            />
 
-          <Cloud
-            position={[0, 0, 0]}
-            speed={0}
-            opacity={0.9}
-            scale={[16, 16, 26]}
-            color={new THREE.Color(0x000000)}
-            segments={7}
-            seed={1}
-          />
+            <Cloud
+              position={[0, 0, 0]}
+              speed={0}
+              opacity={0.9}
+              scale={[16, 16, 26]}
+              color={new THREE.Color(0x000000)}
+              segments={7}
+              seed={1}
+            />
 
-          <GlassCubes></GlassCubes>
-          <Effects></Effects>
-          <fogExp2 attach="fog" color="black" density={0.01} />
-          <Atom></Atom>
-        </Canvas>
+            <GlassCubes></GlassCubes>
+            <Effects></Effects>
+            <fogExp2 attach="fog" color="black" density={0.01} />
+            <Atom></Atom>
+          </Canvas>
+        </Suspense>
       </div>
     );
   } else if (showScreen == "1") {
