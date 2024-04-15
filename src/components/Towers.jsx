@@ -3,7 +3,7 @@ import * as THREE from "three";
 import React, { useRef, useState } from "react";
 import { useControls } from "leva";
 
-const towerQuantity = 25;
+const towerQuantity = 45;
 const maxTowerHeight = 80;
 const minTowerHeight = 10;
 let towersArray = [];

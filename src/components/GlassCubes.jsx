@@ -39,12 +39,12 @@ function GlassCubes() {
         <boxGeometry args={[10, 10, 10]} />
         <meshPhysicalMaterial {...materialPropsObj} />
       </mesh>
-      <mesh position={[-10, 8, 60]} ref={cubeMed}>
-        <boxGeometry args={[8, 8, 8]} />
+      <mesh position={[-8, 10, 60]} ref={cubeMed}>
+        <boxGeometry args={[7, 7, 7]} />
         <meshPhysicalMaterial {...materialPropsObj} />
       </mesh>
-      <mesh position={[13, 5, 42]} ref={cubeFar}>
-        <boxGeometry args={[7, 7, 7]} />
+      <mesh position={[13, 3, 42]} ref={cubeFar}>
+        <boxGeometry args={[6, 6, 6]} />
         <meshPhysicalMaterial {...materialPropsObj} />
       </mesh>
     </>

@@ -8,7 +8,12 @@ import { useControls } from "leva";
 import Towers from "./components/Towers.jsx";
 import MemoryCard from "./components/MemoryCard.jsx";
 import PreLoader from "./components/PreLoader.jsx";
-import { EffectComposer, Vignette, Bloom } from "@react-three/postprocessing";
+import {
+  EffectComposer,
+  Vignette,
+  Bloom,
+  Scanline,
+} from "@react-three/postprocessing";
 import { BlendFunction, BlurPass } from "postprocessing";
 
 import GlassCubes from "./components/GlassCubes.jsx";
@@ -39,6 +44,17 @@ function App() {
   function Effects() {
     return (
       <EffectComposer>
+        {/*         <SSAO
+          blendFunction={BlendFunction.NORMAL} // Use NORMAL to see the effect
+          samples={31}
+          radius={3}
+          intensity={10}
+        /> */}
+        <Scanline
+          density={1.8}
+          opacity={0.75}
+          blendFunction={BlendFunction.MULTIPLY}
+        />
         <Vignette
           offset={0.5}
           darkness={0.7}
@@ -46,6 +62,8 @@ function App() {
           blendFunction={BlendFunction.NORMAL}
         />
         <Bloom
+          radius={0.5}
+          kernelSize={2}
           intensity={1}
           luminanceThreshold={0.2}
           luminanceSmoothing={0.5}
@@ -112,7 +130,7 @@ function App() {
         <Electron
           position={[0, 0, 0]}
           speed={0.6}
-          zAxis={120}
+          zAxis={109}
           xAxis={10}
           yAxis={15}
           color={0x40e2a0}
@@ -163,9 +181,12 @@ function App() {
 
   function CameraZoom() {
     // This one makes the camera move in and out
+
     let cameraSpeedPosition = 4;
     let cameraspeedRotation = 0.05;
     useFrame(({ clock, camera }) => {
+      camera.position.z = 120;
+      camera.rotation.z = 0;
       camera.position.z = 120 - clock.getElapsedTime() * cameraSpeedPosition;
       camera.rotation.z = 0 - clock.getElapsedTime() * cameraspeedRotation;
       if (clock.getElapsedTime() > 7) {
