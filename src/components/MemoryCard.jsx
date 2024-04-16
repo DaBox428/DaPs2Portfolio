@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, Suspense } from "react";
 import "../App.css";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
@@ -10,20 +10,24 @@ import { Html, useProgress } from "@react-three/drei";
 import FakeGlowMaterial from "./FakeGlowMaterial";
 import { EffectComposer, Vignette, Bloom } from "@react-three/postprocessing";
 import { MTLLoader } from "three/examples/jsm/Addons.js";
+import { useFBX } from "@react-three/drei";
 
 const threeDmodelsArray = [
   {
-    url: "../kidbuu/model.obj",
-    mtl: "../kidbuu/model.mtl",
-    position: [0, -5, 0],
-    rotation: [-90, 0, 0],
-  },
-  {
-    url: "../catarina/model.obj",
+    url: "../catarina/model.fbx",
     mtl: "../catarina/model.mtl",
     position: [0, -5, 0],
     rotation: [-90, 0, 0],
+    meshTexture: "../catarina/Binary_0.png",
   },
+  {
+    url: "../kidbuu/model.fbx",
+    mtl: "../kidbuu/model.mtl",
+    position: [0, -5, 0],
+    rotation: [-90, 0, 0],
+    meshTexture: "../kidbuu/Binary_0.png",
+  },
+
   /*  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
   { url: "../catarina.obj", position: [0, -7, 2], rotation: [0, 0, 0] },
   { url: "a", position: [0, -5, -2], rotation: [0, 0, 0] },
@@ -36,12 +40,15 @@ function Loader() {
   return <Html center>{progress} % loaded</Html>;
 }
 
-function Model({ modelUrl, MtlUrl, modelPosition, modelRotation }) {
-  const materials = useLoader(MTLLoader, MtlUrl);
-  const obj = useLoader(OBJLoader, modelUrl, (loader) => {
-    materials.preload();
-    loader.setMaterials(materials);
-  });
+function Model({
+  modelUrl,
+  MtlUrl,
+  modelPosition,
+  modelRotation,
+  meshTexture,
+}) {
+  const colorMap = useLoader(TextureLoader, meshTexture);
+  const obj = useFBX(modelUrl);
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -68,14 +75,17 @@ function Model({ modelUrl, MtlUrl, modelPosition, modelRotation }) {
           <directionalLight intensity={2} color={0x7cb2e8} />
         </mesh>
       )}
-      <primitive
-        onPointerOver={() => handleSetIsHoeverd(true)}
-        onPointerOut={() => handleSetIsHoeverd(false)}
-        object={obj}
-        scale={5}
-        rotation={modelRotation}
-        position={modelPosition}
-      />
+      <mesh>
+        <primitive
+          onPointerOver={() => handleSetIsHoeverd(true)}
+          onPointerOut={() => handleSetIsHoeverd(false)}
+          object={obj}
+          scale={5}
+          rotation={modelRotation}
+          position={modelPosition}
+        />
+        <meshBasicMaterial map={colorMap} attach="BUK_avt" />
+      </mesh>
     </>
   );
 }
@@ -102,6 +112,7 @@ function MemoryCard({ handleChangeScreen }) {
                       modelPosition={item.position}
                       modelRotation={item.rotation}
                       MtlUrl={item.mtl}
+                      meshTexture={item.meshTexture}
                     />
                   </Suspense>
                 </Canvas>
