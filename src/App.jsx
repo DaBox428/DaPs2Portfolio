@@ -269,11 +269,7 @@ function App() {
       </div>
     );
   } else if (showScreen == "1") {
-    return (
-      <div className="h-screen bg-black" id="MemoryCard">
-        <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
-      </div>
-    );
+    return <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
   } else {
     return <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
   }

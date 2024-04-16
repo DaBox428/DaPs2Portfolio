@@ -1,26 +1,22 @@
 import { React, useState } from "react";
 import "../App.css";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
-import { useLoader } from "@react-three/fiber";
+
+import { useLoader, useGraph } from "@react-three/fiber";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, OrbitControls, useTexture } from "@react-three/drei";
-import { renderToString } from "react-dom/server";
-import { Effects } from "@react-three/drei";
+import { useGLTF, OrbitControls, Environment } from "@react-three/drei";
+
 import FakeGlowMaterial from "./FakeGlowMaterial";
 import { EffectComposer, Vignette, Bloom } from "@react-three/postprocessing";
+import { MTLLoader, OBJLoader } from "three/examples/jsm/Addons.js";
 
-const threeDmodelsArray = [
-  { url: "../buuObj.obj", position: [0, -5, 0], rotation: [-90, 0, 0] },
-  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "../catarina.obj", position: [0, -7, 2], rotation: [0, 0, 0] },
-  { url: "a", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "e", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "s", position: [0, -5, -2], rotation: [0, 0, 0] },
-];
-
-function Model({ modelUrl, modelPosition, modelRotation }) {
+import Buu from "../assets/Buu.jsx";
+import { Hominid } from "../assets/Hominid.jsx";
+const modelQuantity = 2;
+function Model({ modelUrl, scale, mtlURL, modelPosition, modelRotation }) {
+  const materials = useLoader(MTLLoader, mtlURL);
   const obj = useLoader(OBJLoader, modelUrl);
+
+  const { nodes, materiales } = useGraph(obj);
   const [isHovered, setIsHovered] = useState(false);
 
   function handleSetIsHoeverd(active) {
@@ -46,41 +42,48 @@ function Model({ modelUrl, modelPosition, modelRotation }) {
           <directionalLight intensity={2} color={0x7cb2e8} />
         </mesh>
       )}
-      <primitive
+      <mesh geometry={nodes.BUK_avt.geometry}></mesh>
+      {/* <primitive
         onPointerOver={() => handleSetIsHoeverd(true)}
         onPointerOut={() => handleSetIsHoeverd(false)}
         object={obj}
-        scale={5}
+        scale={scale}
         rotation={modelRotation}
         position={modelPosition}
-      />
+      /> */}
     </>
   );
 }
 function MemoryCard({ handleChangeScreen }) {
   return (
-    <div
-      className={`flex  h-screen w-screen bg-gradient-to-br from-slate-200 to-black-900 
+    <div className="bg-black">
+      <div
+        className={`flex overflow-y-auto h-screen w-screen bg-gradient-to-br from-slate-100 to-black
       }`}
-      style={{ animation: "fadeIn 5s" }}
-    >
-      <div className="m-auto ml-52 mr-52">
-        <div className="flex  flex-wrap">
-          {threeDmodelsArray.map((item) => {
-            return (
-              <div key={item.url} className="border border-slate-700">
-                <Canvas>
-                  <ambientLight intensity={1} />
+        style={{ animation: "fadeIn 5s" }}
+      >
+        <div className="m-auto ">
+          <div className="flex  flex-wrap">
+            <div className="border border-slate-700 h-screen w-screen">
+              <div className="flex  flex-wrap ml-28">
+                {[...Array(modelQuantity)].map((x, i) => (
+                  <div className="border border-slate-700">
+                    <Canvas camera={{ fov: 17 }}>
+                      {/* <OrbitControls /> */}
+                      <ambientLight intensity={1} />
+                      <Environment preset="studio"></Environment>
 
-                  <Model
-                    modelUrl={item.url}
-                    modelPosition={item.position}
-                    modelRotation={item.rotation}
-                  />
-                </Canvas>
+                      <Buu
+                        scale={0.002}
+                        rotation={[90, 0, 0]}
+                        position={[-0.2, 0.1, 0]}
+                      />
+                    </Canvas>
+                  </div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
