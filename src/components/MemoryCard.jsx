@@ -6,21 +6,43 @@ import { useLoader } from "@react-three/fiber";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, OrbitControls, useTexture } from "@react-three/drei";
 import { renderToString } from "react-dom/server";
-import { Effects } from "@react-three/drei";
+import { Html, useProgress } from "@react-three/drei";
 import FakeGlowMaterial from "./FakeGlowMaterial";
 import { EffectComposer, Vignette, Bloom } from "@react-three/postprocessing";
+import { MTLLoader } from "three/examples/jsm/Addons.js";
 
 const threeDmodelsArray = [
-  { url: "../buuObj.obj", position: [0, -5, 0], rotation: [-90, 0, 0] },
-  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
+  {
+    url: "../kidbuu/model.obj",
+    mtl: "../kidbuu/model.mtl",
+    position: [0, -5, 0],
+    rotation: [-90, 0, 0],
+  },
+  {
+    url: "../catarina/model.obj",
+    mtl: "../catarina/model.mtl",
+    position: [0, -5, 0],
+    rotation: [-90, 0, 0],
+  },
+  /*  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
   { url: "../catarina.obj", position: [0, -7, 2], rotation: [0, 0, 0] },
   { url: "a", position: [0, -5, -2], rotation: [0, 0, 0] },
   { url: "e", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "s", position: [0, -5, -2], rotation: [0, 0, 0] },
+  { url: "s", position: [0, -5, -2], rotation: [0, 0, 0] }, */
 ];
 
-function Model({ modelUrl, modelPosition, modelRotation }) {
-  const obj = useLoader(OBJLoader, modelUrl);
+function Loader() {
+  const { progress } = useProgress();
+  return <Html center>{progress} % loaded</Html>;
+}
+
+function Model({ modelUrl, MtlUrl, modelPosition, modelRotation }) {
+  const materials = useLoader(MTLLoader, MtlUrl);
+  const obj = useLoader(OBJLoader, modelUrl, (loader) => {
+    materials.preload();
+    loader.setMaterials(materials);
+  });
+
   const [isHovered, setIsHovered] = useState(false);
 
   function handleSetIsHoeverd(active) {
@@ -70,13 +92,18 @@ function MemoryCard({ handleChangeScreen }) {
             return (
               <div key={item.url} className="border border-slate-700">
                 <Canvas>
-                  <ambientLight intensity={1} />
+                  <Suspense fallback={<Loader />}>
+                    <OrbitControls></OrbitControls>
+                    <ambientLight intensity={1} />
+                    <Environment preset="studio" />
 
-                  <Model
-                    modelUrl={item.url}
-                    modelPosition={item.position}
-                    modelRotation={item.rotation}
-                  />
+                    <Model
+                      modelUrl={item.url}
+                      modelPosition={item.position}
+                      modelRotation={item.rotation}
+                      MtlUrl={item.mtl}
+                    />
+                  </Suspense>
                 </Canvas>
               </div>
             );
