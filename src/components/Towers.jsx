@@ -35,10 +35,10 @@ function isTowerOverlapping(towerArray, towerPosition, minDistance) {
 
 function generateTowersArray() {
   const navigatorWidth = window.innerWidth;
+  console.log(navigatorWidth);
+  let towerQuantity = 45;
 
-  let towerQuantity = 14;
-
-  navigatorWidth <= 1080 ? (towerQuantity = 25) : (towerQuantity = 45);
+  navigatorWidth <= 1080 ? (towerQuantity = 10) : (towerQuantity = 45);
 
   let meshObject;
   let contador = 1;

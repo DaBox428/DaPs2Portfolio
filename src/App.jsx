@@ -114,7 +114,7 @@ function App() {
       );
     });
 
-    let returnLights = (
+    return (
       <group {...props}>
         <Trail
           local
@@ -146,22 +146,6 @@ function App() {
         </Trail>
       </group>
     );
-
-    if (!showLights) {
-      returnLights = (
-        <mesh ref={ref}>
-          <sphereGeometry args={[0.25]} />
-          <meshBasicMaterial
-            color={color}
-            toneMapped={false}
-            opacity={1}
-            reflectivity
-          />
-        </mesh>
-      );
-    }
-
-    return returnLights;
   }
 
   function Atom(props) {
@@ -254,22 +238,26 @@ function App() {
           <Suspense fallback={<Loader />}>
             <CameraZoom />
             <Towers></Towers>
-            <Cloud
-              position={[0, 0, -25]}
-              speed={0.2}
-              opacity={0.5}
-              scale={[7, 9, 7]}
-              color={new THREE.Color(0x232d61)}
-              seed={1}
-            />
-            <Cloud
-              position={[8, 8, -15]}
-              speed={0}
-              opacity={0.2}
-              scale={[8, 9, 7]}
-              color={new THREE.Color(0x232d61)}
-              seed={1}
-            />
+            {navigatorWidth > 1080 && (
+              <Cloud
+                position={[0, 0, -25]}
+                speed={0.2}
+                opacity={0.5}
+                scale={[7, 9, 7]}
+                color={new THREE.Color(0x232d61)}
+                seed={1}
+              />
+            )}
+            {navigatorWidth > 1080 && (
+              <Cloud
+                position={[8, 8, -15]}
+                speed={0}
+                opacity={0.2}
+                scale={[8, 9, 7]}
+                color={new THREE.Color(0x232d61)}
+                seed={1}
+              />
+            )}
             <Cloud
               position={[7, 0, -10]}
               speed={0}
@@ -278,14 +266,16 @@ function App() {
               color={new THREE.Color(0x000042)}
               seed={1}
             />
-            <Cloud
-              position={[0, 7, -5]}
-              speed={0}
-              opacity={0.2}
-              scale={[7, 7, 7]}
-              color={new THREE.Color(0x000042)}
-              seed={1}
-            />
+            {navigatorWidth > 1080 && (
+              <Cloud
+                position={[0, 7, -5]}
+                speed={0}
+                opacity={0.2}
+                scale={[7, 7, 7]}
+                color={new THREE.Color(0x000042)}
+                seed={1}
+              />
+            )}
             <Cloud
               position={[0, 0, 0]}
               speed={0}
