@@ -114,7 +114,7 @@ function App() {
       );
     });
 
-    return (
+    let returnLights = (
       <group {...props}>
         <Trail
           local
@@ -146,6 +146,22 @@ function App() {
         </Trail>
       </group>
     );
+
+    if (!showLights) {
+      returnLights = (
+        <mesh ref={ref}>
+          <sphereGeometry args={[0.25]} />
+          <meshBasicMaterial
+            color={color}
+            toneMapped={false}
+            opacity={1}
+            reflectivity
+          />
+        </mesh>
+      );
+    }
+
+    return returnLights;
   }
 
   function Atom(props) {
