@@ -36,7 +36,7 @@ function isTowerOverlapping(towerArray, towerPosition, minDistance) {
 function generateTowersArray() {
   const navigatorWidth = window.innerWidth;
 
-  let towerQuantity = 24;
+  let towerQuantity = 14;
 
   navigatorWidth <= 1080 ? (towerQuantity = 25) : (towerQuantity = 45);
 
