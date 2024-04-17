@@ -2,7 +2,14 @@ import React, { Suspense, useRef, useState, useEffect, useMemo } from "react";
 import * as THREE from "three";
 import "./App.css";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Cloud, Line, Sphere, Trail } from "@react-three/drei";
+import {
+  Cloud,
+  Line,
+  Sphere,
+  Trail,
+  useProgress,
+  Html,
+} from "@react-three/drei";
 import { useControls } from "leva";
 
 import Towers from "./components/Towers.jsx";
@@ -19,7 +26,10 @@ import { BlendFunction, BlurPass } from "postprocessing";
 import GlassCubes from "./components/GlassCubes.jsx";
 
 function App() {
-  const [count, setCount] = useState(0);
+  function Loader() {
+    const { progress } = useProgress();
+    return <Html center>{progress} % loaded</Html>;
+  }
 
   const loadingCanvas = useRef();
   const [showScreen, setShowScreen] = useState(1);
@@ -36,7 +46,7 @@ function App() {
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
-      }, 200 /* 9000 */);
+      }, 9000 /* 9000 */);
     };
     loading();
   }, []);
@@ -51,8 +61,8 @@ function App() {
           intensity={10}
         /> */}
         <Scanline
-          density={1.8}
-          opacity={0.75}
+          density={2.0}
+          opacity={0.5}
           blendFunction={BlendFunction.MULTIPLY}
         />
         <Vignette
@@ -64,7 +74,7 @@ function App() {
         <Bloom
           radius={0.5}
           kernelSize={2}
-          intensity={1}
+          intensity={0.2}
           luminanceThreshold={0.2}
           luminanceSmoothing={0.5}
         />
@@ -104,13 +114,13 @@ function App() {
       <group {...props}>
         <Trail
           local
-          width={3}
+          width={4}
           length={16}
           color={new THREE.Color(color)}
           attenuation={(t) => t * t}
         >
           <mesh ref={ref}>
-            <sphereGeometry args={[0.2]} />
+            <sphereGeometry args={[0.25]} />
             <meshBasicMaterial
               color={color}
               toneMapped={false}
@@ -118,6 +128,7 @@ function App() {
               reflectivity
             />
             <directionalLight intensity={2} color={color} />
+            <pointLight intensity={8} color={color} distance={0} decay={100} />
           </mesh>
         </Trail>
       </group>
@@ -130,7 +141,7 @@ function App() {
         <Electron
           position={[0, 0, 0]}
           speed={0.6}
-          zAxis={109}
+          zAxis={114}
           xAxis={10}
           yAxis={15}
           color={0x40e2a0}
@@ -181,13 +192,19 @@ function App() {
 
   function CameraZoom() {
     // This one makes the camera move in and out
+    const navigatorWidth = window.innerWidth;
 
+    let cameraStartPosition;
+    navigatorWidth <= 1080
+      ? (cameraStartPosition = 130)
+      : (cameraStartPosition = 120);
     let cameraSpeedPosition = 4;
     let cameraspeedRotation = 0.05;
     useFrame(({ clock, camera }) => {
-      camera.position.z = 120;
+      camera.position.z = cameraStartPosition;
       camera.rotation.z = 0;
-      camera.position.z = 120 - clock.getElapsedTime() * cameraSpeedPosition;
+      camera.position.z =
+        cameraStartPosition - clock.getElapsedTime() * cameraSpeedPosition;
       camera.rotation.z = 0 - clock.getElapsedTime() * cameraspeedRotation;
       if (clock.getElapsedTime() > 7) {
         cameraSpeedPosition += 0.4;
@@ -205,8 +222,8 @@ function App() {
         id="Towers"
         style={{ animation: "fadeIn 0.3s" }}
       >
-        <Suspense fallback={<span>loading...</span>}>
-          <Canvas>
+        <Canvas>
+          <Suspense fallback={<Loader />}>
             <CameraZoom />
             <Towers></Towers>
             <Cloud
@@ -264,8 +281,8 @@ function App() {
             <Effects></Effects>
             <fogExp2 attach="fog" color="black" density={0.01} />
             <Atom></Atom>
-          </Canvas>
-        </Suspense>
+          </Suspense>
+        </Canvas>
       </div>
     );
   } else if (showScreen == "1") {

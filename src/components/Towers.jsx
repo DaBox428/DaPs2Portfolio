@@ -3,7 +3,6 @@ import * as THREE from "three";
 import React, { useRef, useState } from "react";
 import { useControls } from "leva";
 
-const towerQuantity = 45;
 const maxTowerHeight = 80;
 const minTowerHeight = 10;
 let towersArray = [];
@@ -35,6 +34,12 @@ function isTowerOverlapping(towerArray, towerPosition, minDistance) {
 }
 
 function generateTowersArray() {
+  const navigatorWidth = window.innerWidth;
+
+  let towerQuantity = 24;
+
+  navigatorWidth <= 1080 ? (towerQuantity = 25) : (towerQuantity = 45);
+
   let meshObject;
   let contador = 1;
   let skipped = 0;
@@ -81,9 +86,17 @@ const Towers = (props) => {
 
   return (
     <>
-      <ambientLight intensity={0.3} />
+      <ambientLight intensity={0.9} />
 
       <directionalLight color={"#5f5b9a"} position={[7, 8, 7]} intensity={13} />
+
+      <directionalLight
+        color={"#38518a"}
+        position={[0, 0, 110]}
+        intensity={0.4}
+        lookAt={[0, 0, 0]}
+        castShadow
+      />
 
       <directionalLight
         position={[-5, -5, 50]}
