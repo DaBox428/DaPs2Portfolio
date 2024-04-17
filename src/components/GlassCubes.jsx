@@ -3,6 +3,9 @@ import React, { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 
 function GlassCubes() {
+  const navigatorWidth = window.innerWidth;
+
+  let hide = navigatorWidth < 1081;
   const cubeClose = useRef();
   const cubeMed = useRef();
   const cubeFar = useRef();
@@ -29,8 +32,8 @@ function GlassCubes() {
     ior: 2.3,
     envMapIntensity: 25,
     color: "#4e4e4e",
-    reflectivity: 2.1,
-    specularIntensity: 1.15,
+    reflectivity: hide ? 0 : 2.1,
+    specularIntensity: hide ? 0 : 1.15,
   };
 
   return (

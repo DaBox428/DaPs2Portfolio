@@ -30,13 +30,11 @@ function App() {
     const { progress } = useProgress();
     return <Html center>{progress} % loaded</Html>;
   }
-
+  const navigatorWidth = window.innerWidth;
   const loadingCanvas = useRef();
   const [showScreen, setShowScreen] = useState(1);
-
+  console.log(navigatorWidth);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [fade, setFade] = useState(false);
 
   function handleChangeScreen(toScreen) {
     setShowScreen(toScreen);
@@ -71,13 +69,15 @@ function App() {
           eskil={false}
           blendFunction={BlendFunction.NORMAL}
         />
-        <Bloom
-          radius={0.5}
-          kernelSize={2}
-          intensity={0.2}
-          luminanceThreshold={0.2}
-          luminanceSmoothing={0.5}
-        />
+        {navigatorWidth > 1080 && (
+          <Bloom
+            radius={0.5}
+            kernelSize={2}
+            intensity={0.2}
+            luminanceThreshold={0.2}
+            luminanceSmoothing={0.5}
+          />
+        )}
       </EffectComposer>
     );
   }
@@ -94,6 +94,9 @@ function App() {
     opposite,
     ...props
   }) {
+    let showLights;
+    navigatorWidth <= 1080 ? (showLights = false) : (showLights = true);
+
     const ref = useRef();
 
     zAxis = zAxis - 40;
@@ -110,12 +113,13 @@ function App() {
         Math.sin(t * (30 / 180)) + zAxis
       );
     });
+
     return (
       <group {...props}>
         <Trail
           local
           width={4}
-          length={16}
+          length={navigatorWidth > 1080 ? 16 : 8}
           color={new THREE.Color(color)}
           attenuation={(t) => t * t}
         >
@@ -127,8 +131,17 @@ function App() {
               opacity={1}
               reflectivity
             />
-            <directionalLight intensity={2} color={color} />
-            <pointLight intensity={8} color={color} distance={0} decay={100} />
+            {showLights && (
+              <>
+                <directionalLight intensity={2} color={color} />
+                <pointLight
+                  intensity={8}
+                  color={color}
+                  distance={0}
+                  decay={100}
+                />
+              </>
+            )}
           </mesh>
         </Trail>
       </group>
@@ -192,7 +205,6 @@ function App() {
 
   function CameraZoom() {
     // This one makes the camera move in and out
-    const navigatorWidth = window.innerWidth;
 
     let cameraStartPosition;
     navigatorWidth <= 1080
