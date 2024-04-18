@@ -1,30 +1,31 @@
 import { React, useState, Suspense } from "react";
 import "../App.css";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
-import { OBJLoader } from "three/examples/jsm/loaders/OBJLoader";
+
 import { useLoader } from "@react-three/fiber";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, OrbitControls, useTexture } from "@react-three/drei";
-import { renderToString } from "react-dom/server";
+import { Canvas } from "@react-three/fiber";
+import { Environment, OrbitControls } from "@react-three/drei";
+
 import { Html, useProgress } from "@react-three/drei";
 import FakeGlowMaterial from "./FakeGlowMaterial";
-import { EffectComposer, Vignette, Bloom } from "@react-three/postprocessing";
-import { MTLLoader } from "three/examples/jsm/Addons.js";
+
 import { useFBX } from "@react-three/drei";
 
 const threeDmodelsArray = [
   {
-    url: "../catarina/model.fbx",
-    mtl: "../catarina/model.mtl",
-    position: [0, -5, 0],
-    rotation: [-90, 0, 0],
-    meshTexture: "../catarina/Binary_0.png",
+    url: "../hominid/model.fbx",
+
+    position: [0, -0.2, 1],
+    rotation: [2, 0, 0],
+    scale: 1,
+    meshTexture: "../hominid/Binary_0.png",
   },
   {
     url: "../kidbuu/model.fbx",
-    mtl: "../kidbuu/model.mtl",
-    position: [0, -5, 0],
-    rotation: [-90, 0, 0],
+
+    position: [-0, -30, -90],
+    rotation: [3, 0, 0],
+    modelScale: 0.6,
     meshTexture: "../kidbuu/Binary_0.png",
   },
 
@@ -42,10 +43,11 @@ function Loader() {
 
 function Model({
   modelUrl,
-  MtlUrl,
   modelPosition,
   modelRotation,
   meshTexture,
+  modelScale,
+  handleOnClickModal,
 }) {
   const colorMap = useLoader(TextureLoader, meshTexture);
   const obj = useFBX(modelUrl);
@@ -77,10 +79,11 @@ function Model({
       )}
       <mesh>
         <primitive
+          onClick={handleOnClickModal}
           onPointerOver={() => handleSetIsHoeverd(true)}
           onPointerOut={() => handleSetIsHoeverd(false)}
           object={obj}
-          scale={5}
+          scale={modelScale}
           rotation={modelRotation}
           position={modelPosition}
         />
@@ -89,19 +92,42 @@ function Model({
     </>
   );
 }
-function MemoryCard({ handleChangeScreen }) {
+
+function MemoryCard() {
+  const [showDialog, setShowDialog] = useState(false);
+
+  function handleOnClickModal() {
+    console.log("clicked model");
+  }
+
+  function ShowModelDialog({}) {
+    console.log("setting, ", showDialog);
+    return (
+      <dialog open>
+        <p>Greetings, one and all!</p>
+        <form method="dialog">
+          <button>OK</button>
+        </form>
+      </dialog>
+    );
+  }
+
   return (
     <div
-      className={`flex  h-screen w-screen bg-gradient-to-br from-slate-200 to-black-900 
+      className={`flex h-full w-full bg-gradient-to-br from-slate-200 to-black-900 
       }`}
       style={{ animation: "fadeIn 5s" }}
     >
+      <ShowModelDialog />
       <div className="m-auto ml-52 mr-52">
         <div className="flex  flex-wrap">
           {threeDmodelsArray.map((item) => {
             return (
-              <div key={item.url} className="border border-slate-700">
-                <Canvas>
+              <div
+                key={Math.random(1, 100)}
+                className="border border-slate-700"
+              >
+                <Canvas /* camera={{ fov: 70, position: [0, 0, 0] }} */>
                   <Suspense fallback={<Loader />}>
                     <OrbitControls></OrbitControls>
                     <ambientLight intensity={1} />
@@ -111,8 +137,9 @@ function MemoryCard({ handleChangeScreen }) {
                       modelUrl={item.url}
                       modelPosition={item.position}
                       modelRotation={item.rotation}
-                      MtlUrl={item.mtl}
                       meshTexture={item.meshTexture}
+                      modelScale={item.modelScale}
+                      handleOnClickModal={handleOnClickModal}
                     />
                   </Suspense>
                 </Canvas>

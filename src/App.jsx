@@ -10,7 +10,6 @@ import {
   useProgress,
   Html,
 } from "@react-three/drei";
-import { useControls } from "leva";
 
 import Towers from "./components/Towers.jsx";
 import MemoryCard from "./components/MemoryCard.jsx";
@@ -33,21 +32,23 @@ function App() {
   const navigatorWidth = window.innerWidth;
   const loadingCanvas = useRef();
   const [showScreen, setShowScreen] = useState(1);
+  const [showInsertCd, setShowInsertCd] = useState(true);
   console.log(navigatorWidth);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   function handleChangeScreen(toScreen) {
     setShowScreen(toScreen);
   }
 
-  useEffect(() => {
+  const startTimer = () => {
+    console.log("started timer");
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
       }, 9000 /* 9000 */);
     };
     loading();
-  }, []);
+  };
 
   function Effects() {
     return (
@@ -226,91 +227,107 @@ function App() {
     });
     return null;
   }
-  if (isLoading) {
-    return (
-      <div
-        ref={loadingCanvas}
-        className={"h-screen bg-black"}
-        id="Towers"
-        style={{ animation: "fadeIn 0.3s" }}
-      >
-        <Canvas>
-          <Suspense fallback={<Loader />}>
-            <CameraZoom />
-            <Towers></Towers>
-            {navigatorWidth > 1080 && (
-              <Cloud
-                position={[0, 0, -25]}
-                speed={0.2}
-                opacity={0.5}
-                scale={[7, 9, 7]}
-                color={new THREE.Color(0x232d61)}
-                seed={1}
-              />
-            )}
-            {navigatorWidth > 1080 && (
-              <Cloud
-                position={[8, 8, -15]}
-                speed={0}
-                opacity={0.2}
-                scale={[8, 9, 7]}
-                color={new THREE.Color(0x232d61)}
-                seed={1}
-              />
-            )}
-            <Cloud
-              position={[7, 0, -10]}
-              speed={0}
-              opacity={0.2}
-              scale={[7, 9, 7]}
-              color={new THREE.Color(0x000042)}
-              seed={1}
-            />
-            {navigatorWidth > 1080 && (
-              <Cloud
-                position={[0, 7, -5]}
-                speed={0}
-                opacity={0.2}
-                scale={[7, 7, 7]}
-                color={new THREE.Color(0x000042)}
-                seed={1}
-              />
-            )}
-            <Cloud
-              position={[0, 0, 0]}
-              speed={0}
-              opacity={0.1}
-              scale={[9, 16, 9]}
-              color={new THREE.Color(0x4062bb)}
-              seed={1}
-            />
 
-            <Cloud
-              position={[0, 0, 0]}
-              speed={0}
-              opacity={0.9}
-              scale={[16, 16, 26]}
-              color={new THREE.Color(0x000000)}
-              segments={7}
-              seed={1}
-            />
+  function onClickStartIntro() {
+    console.log("clicked start anim");
+    setShowInsertCd(false);
+    startTimer();
+    setIsLoading(true);
+  }
 
-            <GlassCubes></GlassCubes>
-            <Effects></Effects>
-            <fogExp2 attach="fog" color="black" density={0.01} />
-            <Atom></Atom>
-          </Suspense>
-        </Canvas>
-      </div>
-    );
-  } else if (showScreen == "1") {
+  if (showInsertCd) {
     return (
-      <div className="h-screen bg-black" id="MemoryCard">
-        <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
+      <div className="bg-black overflow-hidden w-screen h-screen">
+        <PreLoader onClick={onClickStartIntro}></PreLoader>;
       </div>
     );
   } else {
-    return <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
+    if (isLoading) {
+      return (
+        <div ref={loadingCanvas} className={"h-screen bg-black "} id="Towers">
+          <Canvas style={{ animation: "fadeIn 2s" }}>
+            <Suspense fallback={<Loader />}>
+              <CameraZoom />
+              <Towers></Towers>
+              {navigatorWidth > 1080 && (
+                <Cloud
+                  position={[0, 0, -25]}
+                  speed={0.2}
+                  opacity={0.5}
+                  scale={[7, 9, 7]}
+                  color={new THREE.Color(0x232d61)}
+                  seed={1}
+                />
+              )}
+              {navigatorWidth > 1080 && (
+                <Cloud
+                  position={[8, 8, -15]}
+                  speed={0}
+                  opacity={0.2}
+                  scale={[8, 9, 7]}
+                  color={new THREE.Color(0x232d61)}
+                  seed={1}
+                />
+              )}
+              {navigatorWidth > 1080 && (
+                <Cloud
+                  position={[7, 0, -10]}
+                  speed={0}
+                  opacity={0.2}
+                  scale={[7, 9, 7]}
+                  color={new THREE.Color(0x000042)}
+                  seed={1}
+                />
+              )}
+              {navigatorWidth > 1080 && (
+                <Cloud
+                  position={[0, 7, -5]}
+                  speed={0}
+                  opacity={0.2}
+                  scale={[7, 7, 7]}
+                  color={new THREE.Color(0x000042)}
+                  seed={1}
+                />
+              )}
+              <Cloud
+                position={[0, 0, 0]}
+                speed={0}
+                opacity={0.1}
+                scale={[9, 16, 9]}
+                color={new THREE.Color(0x4062bb)}
+                seed={1}
+              />
+
+              <Cloud
+                position={[0, 0, 0]}
+                speed={0}
+                opacity={0.9}
+                scale={[16, 16, 26]}
+                color={new THREE.Color(0x000000)}
+                segments={7}
+                seed={1}
+              />
+
+              <GlassCubes></GlassCubes>
+              <Effects></Effects>
+              <fogExp2 attach="fog" color="black" density={0.01} />
+              <Atom></Atom>
+            </Suspense>
+          </Canvas>
+        </div>
+      );
+    } else if (showScreen == "1") {
+      return (
+        <div
+          className="h-screen bg-black w-screen overflow-hidden"
+          id="MemoryCard"
+        >
+          <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
+        </div>
+      );
+    } else {
+      return <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
+    }
   }
 }
 
