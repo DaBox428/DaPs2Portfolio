@@ -17,7 +17,7 @@ const threeDmodelsArray = [
 
     position: [0, -0.2, 1],
     rotation: [2, 0, 0],
-    scale: 1,
+    scale: 3,
     meshTexture: "../hominid/Binary_0.png",
   },
   {
@@ -27,6 +27,14 @@ const threeDmodelsArray = [
     rotation: [3, 0, 0],
     modelScale: 0.6,
     meshTexture: "../kidbuu/Binary_0.png",
+  },
+  {
+    url: "../catarina/model.fbx",
+
+    position: [-0, -0, 10],
+    rotation: [0, 0, 0],
+    modelScale: 5,
+    meshTexture: "../catarina/tex.png",
   },
 
   /*  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
@@ -114,22 +122,31 @@ function MemoryCard() {
 
   return (
     <div
-      className={`flex h-full w-full bg-gradient-to-br from-slate-200 to-black-900 
+      className={`flex h-screen w-screen bg-gradient-to-br from-slate-300 to-black-900 
       }`}
       style={{ animation: "fadeIn 5s" }}
     >
+      <div className="mt-16 ml-20 absolute flex ">
+        <div className="bg-slate-500 m-7">insert memory card image here</div>
+        <h1 className=" text-white text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em]">
+          Memory Card (ps2)/1 <br />
+          428 KB free
+        </h1>
+      </div>
+
       <ShowModelDialog />
-      <div className="m-auto ml-52 mr-52">
+      <div className="flex m-auto">
         <div className="flex  flex-wrap">
           {threeDmodelsArray.map((item) => {
             return (
               <div
                 key={Math.random(1, 100)}
-                className="border border-slate-700"
+                /*   className="border border-slate-700" */
+                className="border border-slate-700 min-h-80 min-w-80"
               >
                 <Canvas /* camera={{ fov: 70, position: [0, 0, 0] }} */>
                   <Suspense fallback={<Loader />}>
-                    <OrbitControls></OrbitControls>
+                    {/* <OrbitControls></OrbitControls> */}
                     <ambientLight intensity={1} />
                     <Environment preset="studio" />
 
@@ -139,7 +156,7 @@ function MemoryCard() {
                       modelRotation={item.rotation}
                       meshTexture={item.meshTexture}
                       modelScale={item.modelScale}
-                      handleOnClickModal={handleOnClickModal}
+                      handleOnClickModal={() => handleOnClickModal()}
                     />
                   </Suspense>
                 </Canvas>

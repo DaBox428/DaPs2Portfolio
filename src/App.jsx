@@ -14,6 +14,7 @@ import {
 import Towers from "./components/Towers.jsx";
 import MemoryCard from "./components/MemoryCard.jsx";
 import PreLoader from "./components/PreLoader.jsx";
+import WelcomeText from "./components/WelcomeText.jsx";
 import {
   EffectComposer,
   Vignette,
@@ -244,8 +245,13 @@ function App() {
   } else {
     if (isLoading) {
       return (
-        <div ref={loadingCanvas} className={"h-screen bg-black "} id="Towers">
-          <Canvas style={{ animation: "fadeIn 2s" }}>
+        <div
+          ref={loadingCanvas}
+          className={"h-screen bg-black relative z-0"}
+          id="Towers"
+        >
+          <WelcomeText></WelcomeText>
+          <Canvas style={{ animation: "fadeIn 2s" }} className="">
             <Suspense fallback={<Loader />}>
               <CameraZoom />
               <Towers></Towers>
