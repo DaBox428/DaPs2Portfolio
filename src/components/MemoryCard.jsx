@@ -8,7 +8,7 @@ import { Environment, OrbitControls } from "@react-three/drei";
 
 import { Html, useProgress } from "@react-three/drei";
 import FakeGlowMaterial from "./FakeGlowMaterial";
-
+import ps2CardImage from "../assets/PS2_Memory_Card.png";
 import { useFBX } from "@react-three/drei";
 
 const threeDmodelsArray = [
@@ -122,15 +122,21 @@ function MemoryCard() {
 
   return (
     <div
-      className={`flex h-screen w-screen bg-gradient-to-br from-slate-300 to-black-900 
+      className={`flex h-screen w-screen bg-gradient-to-br from-slate-300 to-black 
       }`}
       style={{ animation: "fadeIn 5s" }}
     >
       <div className="mt-16 ml-20 absolute flex ">
-        <div className="bg-slate-500 m-7">insert memory card image here</div>
-        <h1 className=" text-white text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em]">
+        <img src={ps2CardImage} className="bg-slate-500 mt-0 m-7 max-w-14" />
+        <h1 className=" text-white text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] text-left  align-text-bottom">
           Memory Card (ps2)/1 <br />
           428 KB free
+        </h1>
+      </div>
+
+      <div className="mt-16 ml-20 absolute flex right-20">
+        <h1 className=" text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em]">
+          Your System <br /> Configuration
         </h1>
       </div>
 
