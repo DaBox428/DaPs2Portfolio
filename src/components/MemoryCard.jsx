@@ -1,123 +1,38 @@
-import { React, useState, Suspense } from "react";
+import { React, useState, Suspense, forwardRef, useRef } from "react";
 import "../App.css";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
 
-import { useLoader } from "@react-three/fiber";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
 
 import { Html, useProgress } from "@react-three/drei";
-import FakeGlowMaterial from "./FakeGlowMaterial";
+
 import ps2CardImage from "../assets/PS2_Memory_Card.png";
-import { useFBX } from "@react-three/drei";
 
-const threeDmodelsArray = [
-  {
-    url: "../hominid/model.fbx",
+import ModalDialog from "./ModalDialog";
 
-    position: [0, -0.2, 1],
-    rotation: [2, 0, 0],
-    scale: 3,
-    meshTexture: "../hominid/Binary_0.png",
-  },
-  {
-    url: "../kidbuu/model.fbx",
+import ThreeDModel from "./ThreeDModel";
 
-    position: [-0, -30, -90],
-    rotation: [3, 0, 0],
-    modelScale: 0.6,
-    meshTexture: "../kidbuu/Binary_0.png",
-  },
-  {
-    url: "../catarina/model.fbx",
-
-    position: [-0, -0, 10],
-    rotation: [0, 0, 0],
-    modelScale: 5,
-    meshTexture: "../catarina/tex.png",
-  },
-
-  /*  { url: "../untitled.obj", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "../catarina.obj", position: [0, -7, 2], rotation: [0, 0, 0] },
-  { url: "a", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "e", position: [0, -5, -2], rotation: [0, 0, 0] },
-  { url: "s", position: [0, -5, -2], rotation: [0, 0, 0] }, */
-];
+import ModelArray from "./ModelArray";
 
 function Loader() {
   const { progress } = useProgress();
   return <Html center>{progress} % loaded</Html>;
 }
 
-function Model({
-  modelUrl,
-  modelPosition,
-  modelRotation,
-  meshTexture,
-  modelScale,
-  handleOnClickModal,
-}) {
-  const colorMap = useLoader(TextureLoader, meshTexture);
-  const obj = useFBX(modelUrl);
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  function handleSetIsHoeverd(active) {
-    setIsHovered(active);
-  }
-
-  return (
-    <>
-      {isHovered && (
-        <mesh>
-          <sphereGeometry args={[2]} />
-          <meshStandardMaterial
-            color={0xffffff}
-            toneMapped={false}
-            opacity={1}
-          />
-          <FakeGlowMaterial
-            falloff={1}
-            glowSharpness={0.4}
-            glowColor="#588ed5"
-          ></FakeGlowMaterial>
-
-          <directionalLight intensity={2} color={0x7cb2e8} />
-        </mesh>
-      )}
-      <mesh>
-        <primitive
-          onClick={handleOnClickModal}
-          onPointerOver={() => handleSetIsHoeverd(true)}
-          onPointerOut={() => handleSetIsHoeverd(false)}
-          object={obj}
-          scale={modelScale}
-          rotation={modelRotation}
-          position={modelPosition}
-        />
-        <meshBasicMaterial map={colorMap} attach="BUK_avt" />
-      </mesh>
-    </>
-  );
-}
-
 function MemoryCard() {
-  const [showDialog, setShowDialog] = useState(false);
+  const dialogRef = useRef(null);
 
-  function handleOnClickModal() {
-    console.log("clicked model");
-  }
+  const [selectedModelUrl, setSelectedModelUrl] = useState("");
 
-  function ShowModelDialog({}) {
-    console.log("setting, ", showDialog);
-    return (
-      <dialog open>
-        <p>Greetings, one and all!</p>
-        <form method="dialog">
-          <button>OK</button>
-        </form>
-      </dialog>
-    );
+  function handleOnClickModal(modelUrl) {
+    setSelectedModelUrl(modelUrl);
+    if (!dialogRef.current) {
+      console.log("model");
+      return;
+    }
+    dialogRef.current.hasAttribute("open")
+      ? dialogRef.current.close()
+      : dialogRef.current.showModal();
   }
 
   return (
@@ -126,24 +41,28 @@ function MemoryCard() {
       }`}
       style={{ animation: "fadeIn 5s" }}
     >
-      <div className="mt-16 ml-20 absolute flex ">
-        <img src={ps2CardImage} className="bg-slate-500 mt-0 m-7 max-w-14" />
-        <h1 className=" text-white text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] text-left  align-text-bottom">
+      <div className="md:mt-16 md:ml-20 absolute flex ml-auto mt-7">
+        <img src={ps2CardImage} className=" mt-0 m-7 max-w-14" />
+        <h1 className=" text-white md:text-3xl text-md font-extrabold font-sans font-outline-2 tracking-[.11em] text-left  align-text-bottom">
           Memory Card (ps2)/1 <br />
           428 KB free
         </h1>
       </div>
 
       <div className="mt-16 ml-20 absolute flex right-20">
-        <h1 className=" text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em]">
+        <h1 className=" text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] invisible md:visible">
           Your System <br /> Configuration
         </h1>
       </div>
 
-      <ShowModelDialog />
-      <div className="flex m-auto">
+      <ModalDialog
+        ref={dialogRef}
+        modelUrl={selectedModelUrl}
+        handleOnClickModal={handleOnClickModal}
+      />
+      <div className="flex justify-center items-center w-screen">
         <div className="flex  flex-wrap">
-          {threeDmodelsArray.map((item) => {
+          {ModelArray.map((item) => {
             return (
               <div
                 key={Math.random(1, 100)}
@@ -156,13 +75,13 @@ function MemoryCard() {
                     <ambientLight intensity={1} />
                     <Environment preset="studio" />
 
-                    <Model
+                    <ThreeDModel
                       modelUrl={item.url}
                       modelPosition={item.position}
                       modelRotation={item.rotation}
                       meshTexture={item.meshTexture}
                       modelScale={item.modelScale}
-                      handleOnClickModal={() => handleOnClickModal()}
+                      handleOnClickModal={handleOnClickModal}
                     />
                   </Suspense>
                 </Canvas>

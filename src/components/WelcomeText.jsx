@@ -20,11 +20,11 @@ function WelcomeText() {
 
   return (
     <h1
-      className={`flex font-outline-2 text-3xl tracking-[.11em] text-white w-screen h-screen absolute z-10 justify-center items-center font-extrabold font-sans transition-all duration-[1000ms] ${
+      className={`flex font-outline-2 sm:text-3xl text-sm tracking-[.11em] text-white w-screen h-screen absolute z-10 justify-center items-center font-extrabold font-sans transition-all duration-[1000ms] ${
         fadeIn ? "opacity-100" : "opacity-0"
       }`}
     >
-      Welcome to ̶̧͙̣̞̻̹͎̭͙̏̔̎̿̎͆͊͂͆͒̽̅̽̕͠ ̸̗̹͗̔̏͐̀̔͠ͅ ̶̢̜̙̝̲̺̹̮̭͚̮̐̅́̽̀̉̽́̽ ̶̢̨̻͙̯̣͙͈͓̤̟͕̻̩͈̂̀͋̎̄̋̔͑͆̾̈̊̾͝͠ͅ ̶̺̜̰̥̗͌̊̈̑̊̈́͌̆̈͂͝͝ ̴̺͂̋ ̵̨̛̣̖͎̦̜͕̰̮̬͖͈̯̱̅̊̌̊͋͗̀̍̄̃̇͑̎̌̚͝ͅ ̷͙̦͙͎̋̆̀̽͒̈́͛̾͗̕̕͘̕ ̴͚̳͍̙̜̝̯̣̭̠̱͕̽ ̶̛̜͎̲̺͚̱̞̉̒̽̓̋̅̿̂̊̕͝͠ ̷͎̗̥͇̺͚̜̩͗̾̉̇͑̌̀̋̍̽́͂͛̕̕͝ ̷̛̥̝̪̫͙̺̭̮̞̊̋̎̉̊̈́̚͝͠͝ ̶̡̧̛͉͇̳̜͚̗͙̭̭̰̟̩̉́̀̒̒̾̈́̓̇͘ ̷͎̩̼̭̘̆̀̅̊̄̔̓͋̊͛̈̿̓̍̒̉͐͜ ̴̡̨̘̪͙̣̠̺̳̺̩͚̩͊̓̅̊̎͆͋̐͐͜͠ͅͅ ̸̡̛͚͉͖̤̩̝̺̭̗̖͛̆̇͑̈́̒̅̐͑͐̿̕͝ ̸̤̼͎͕̥͂̃͑͊̇ ̵̰͖̤͖͇̞͙͌̓̏͗͆͆̃̿̅͌̀̔͘͝͝͝͠ ̷̡͚̖̬̪̲͗̇̋̒̈́̚ ̷̙̩͆͊͊̽̇̏ ̷̗̱̻̣̩̻̟͌͗̀͛́͒͋ ̴̩͍̬̬̼̏̽͒̆̏͌̃͛̾̒̓ ̴̼̪̀̐́̋̋̐͌͋̉̍͘̚ ̵̘̲͙̔͂͊̂͆̂̈́́̒͆͒͊͘ ̸̢̧̧̳̥̖̪̗͚͉͓̹̺̋̈́̅ ̴̥͎̭̠͙̟̻͈̜̫͕̠̙̮̈̀̈́̏̃ ̴͓͓̬̝̝̜̲̘̮̤̼̭̼͚̌͒̍̿̍̋͛̿͊͝ͅ ̷̼̘̠͖̣̥͉̄̓́͛̍̓̇͆͂̍̓͌͛̕̚ ̸̨͖̤͇̼̯͔̖͓̣̩̖͐̿͂̿
+      Sony Computer Entertainment
     </h1>
   );
 }

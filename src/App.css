@@ -7,6 +7,10 @@
   }
 }
 
+.animation_trigger {
+  animation: fadeOut;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

@@ -34,8 +34,10 @@ function App() {
   const loadingCanvas = useRef();
   const [showScreen, setShowScreen] = useState(1);
   const [showInsertCd, setShowInsertCd] = useState(true);
-  console.log(navigatorWidth);
+
   const [isLoading, setIsLoading] = useState(false);
+
+  const [fadeOut, setFadeOut] = useState(false);
 
   function handleChangeScreen(toScreen) {
     setShowScreen(toScreen);
@@ -120,7 +122,7 @@ function App() {
       <group {...props}>
         <Trail
           local
-          width={4}
+          width={2}
           length={navigatorWidth > 1080 ? 16 : 8}
           color={new THREE.Color(color)}
           attenuation={(t) => t * t}
@@ -223,7 +225,6 @@ function App() {
       if (clock.getElapsedTime() > 7) {
         cameraSpeedPosition += 0.4;
         cameraspeedRotation += 0.003;
-        loadingCanvas.current.style = { animation: "fadeOut 0.2s" };
       }
     });
     return null;
