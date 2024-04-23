@@ -16,7 +16,11 @@ import ModelArray from "./ModelArray";
 
 function Loader() {
   const { progress } = useProgress();
-  return <Html center>{progress} % loaded</Html>;
+  return (
+    <Html center className=" text-yellow-400">
+      {progress} % loaded
+    </Html>
+  );
 }
 
 function MemoryCard() {
@@ -37,7 +41,7 @@ function MemoryCard() {
 
   return (
     <div
-      className={`flex h-screen w-screen bg-gradient-to-br from-slate-300 to-black 
+      className={`flex h-screen w-screen max-h-screen max-w-screen bg-gradient-to-br from-slate-300 to-black 
       }`}
       style={{ animation: "fadeIn 5s" }}
     >
