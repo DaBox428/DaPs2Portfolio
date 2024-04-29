@@ -31,7 +31,7 @@ function MemoryCard() {
   function handleOnClickModal(modelUrl) {
     setSelectedModelUrl(modelUrl);
     if (!dialogRef.current) {
-      console.log("model");
+
       return;
     }
     dialogRef.current.hasAttribute("open")
@@ -71,12 +71,12 @@ function MemoryCard() {
               <div
                 key={Math.random(1, 100)}
                 /*   className="border border-slate-700" */
-                className="border border-slate-700 min-h-80 min-w-80"
+                className=" min-h-80 min-w-80"
               >
-                <Canvas /* camera={{ fov: 70, position: [0, 0, 0] }} */>
+              <Canvas camera={{ fov: 50, position: [0, 0, 350] }}>
                   <Suspense fallback={<Loader />}>
                     {/* <OrbitControls></OrbitControls> */}
-                    <ambientLight intensity={1} />
+                    <ambientLight intensity={1.5} />
                     <Environment preset="studio" />
 
                     <ThreeDModel
@@ -85,6 +85,7 @@ function MemoryCard() {
                       modelRotation={item.rotation}
                       meshTexture={item.meshTexture}
                       modelScale={item.modelScale}
+
                       handleOnClickModal={handleOnClickModal}
                     />
                   </Suspense>

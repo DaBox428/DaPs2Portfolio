@@ -44,7 +44,7 @@ function App() {
   }
 
   const startTimer = () => {
-    console.log("started timer");
+
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
@@ -231,7 +231,7 @@ function App() {
   }
 
   function onClickStartIntro() {
-    console.log("clicked start anim");
+
     setShowInsertCd(false);
     startTimer();
     setIsLoading(true);

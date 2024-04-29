@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React, useState, useRef, useEffect } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three/src/loaders/TextureLoader";
 import { useFBX, useProgress } from "@react-three/drei";
@@ -11,18 +11,25 @@ function ThreeDModel({
   meshTexture,
   modelScale,
   handleOnClickModal,
+
   ...props
 }) {
   const colorMap = useLoader(TextureLoader, meshTexture);
   let obj = useFBX(modelUrl);
   const model = useRef();
   if (props.repeat) {
+
+    useEffect(() => {
+      model.current.rotation.y = 0
+    });
+    
     useFrame(({ clock }) => {
-      /* model.current.rotation.y = 0 - clock.getElapsedTime() / 3; */
+      model.current.rotation.y = 0 - clock.getElapsedTime() / 3;
     });
 
     obj = obj.clone();
   } else {
+
   }
 
   const [isHovered, setIsHovered] = useState(false);
@@ -35,8 +42,8 @@ function ThreeDModel({
   return (
     <>
       {isHovered && !props.repeat && (
-        <mesh>
-          <sphereGeometry args={[2]} />
+        <mesh position={[0,0,50]}>
+          <sphereGeometry args={[30]} />
           <meshStandardMaterial
             color={0xffffff}
             toneMapped={false}
@@ -44,15 +51,15 @@ function ThreeDModel({
           />
           <FakeGlowMaterial
             falloff={1}
-            glowSharpness={0.4}
+            glowSharpness={0.8}
             glowColor="#588ed5"
           ></FakeGlowMaterial>
 
-          <directionalLight intensity={2} color={0x7cb2e8} />
+          <directionalLight intensity={1} color={0x7cb2e8} />
         </mesh>
       )}
 
-      <mesh ref={model}>
+      <mesh ref={model} >
         <primitive
           onClick={() => handleOnClickModal(modelUrl)}
           onPointerOver={() => handleSetIsHoeverd(true)}
@@ -62,7 +69,7 @@ function ThreeDModel({
           rotation={modelRotation}
           position={modelPosition}
         />
-        <meshBasicMaterial map={colorMap} attach="BUK_avt" />
+        <meshBasicMaterial map={colorMap} toneMapped={false}  transparent={false} opacity={1}/>
       </mesh>
     </>
   );
