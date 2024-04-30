@@ -31,7 +31,6 @@ function MemoryCard() {
   function handleOnClickModal(modelUrl) {
     setSelectedModelUrl(modelUrl);
     if (!dialogRef.current) {
-
       return;
     }
     dialogRef.current.hasAttribute("open")
@@ -41,20 +40,20 @@ function MemoryCard() {
 
   return (
     <div
-      className={`flex h-screen w-screen max-h-screen max-w-screen bg-gradient-to-br from-slate-300 to-black 
-      }`}
+      className={`flex sm:h-screen sm:w-screen sm:max-h-screen sm:max-w-screen bg-gradient-to-br from-slate-300 to-black 
+      h-dvh}`}
       style={{ animation: "fadeIn 5s" }}
     >
-      <div className="md:mt-16 md:ml-20 absolute flex ml-auto mt-7">
+      <div className="md:mt-16 md:ml-20 absolute flex ml-8 sm:ml-auto mt-12">
         <img src={ps2CardImage} className=" mt-0 m-7 max-w-14" />
-        <h1 className=" text-white md:text-3xl text-md font-extrabold font-sans font-outline-2 tracking-[.11em] text-left  align-text-bottom">
+        <h1 className=" text-white md:text-3xl text-lg font-extrabold font-sans font-outline-2 tracking-[.11em] text-left  align-text-bottom">
           Memory Card (ps2)/1 <br />
           428 KB free
         </h1>
       </div>
 
       <div className="mt-16 ml-20 absolute flex right-20">
-        <h1 className=" text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] invisible md:visible">
+        <h1 className=" text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] invisible lg:visible">
           Your System <br /> Configuration
         </h1>
       </div>
@@ -64,8 +63,8 @@ function MemoryCard() {
         modelUrl={selectedModelUrl}
         handleOnClickModal={handleOnClickModal}
       />
-      <div className="flex justify-center items-center w-screen">
-        <div className="flex  flex-wrap">
+      <div className="flex justify-center sm:items-center w-screen mt-28 sm:mt-0">
+        <div className="flex  flex-wrap justify-center">
           {ModelArray.map((item) => {
             return (
               <div
@@ -73,7 +72,7 @@ function MemoryCard() {
                 /*   className="border border-slate-700" */
                 className=" min-h-80 min-w-80"
               >
-              <Canvas camera={{ fov: 50, position: [0, 0, 350] }}>
+                <Canvas camera={{ fov: 50, position: [0, 0, 350] }}>
                   <Suspense fallback={<Loader />}>
                     {/* <OrbitControls></OrbitControls> */}
                     <ambientLight intensity={1.5} />
@@ -85,7 +84,6 @@ function MemoryCard() {
                       modelRotation={item.rotation}
                       meshTexture={item.meshTexture}
                       modelScale={item.modelScale}
-
                       handleOnClickModal={handleOnClickModal}
                     />
                   </Suspense>

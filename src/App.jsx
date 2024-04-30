@@ -44,7 +44,6 @@ function App() {
   }
 
   const startTimer = () => {
-
     const loading = () => {
       setTimeout(() => {
         setIsLoading(false);
@@ -231,7 +230,6 @@ function App() {
   }
 
   function onClickStartIntro() {
-
     setShowInsertCd(false);
     startTimer();
     setIsLoading(true);
@@ -325,10 +323,7 @@ function App() {
       );
     } else if (showScreen == "1") {
       return (
-        <div
-          className="h-screen bg-black w-screen overflow-hidden"
-          id="MemoryCard"
-        >
+        <div className="h-screen bg-black w-screen " id="MemoryCard">
           <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
         </div>
       );
