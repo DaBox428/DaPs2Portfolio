@@ -246,7 +246,7 @@ function App() {
       return (
         <div
           ref={loadingCanvas}
-          className={"h-screen bg-black relative z-0"}
+          className={"h-screen bg-black relative z-0 overflow-hidden "}
           id="Towers"
         >
           <WelcomeText></WelcomeText>
@@ -323,7 +323,7 @@ function App() {
       );
     } else if (showScreen == "1") {
       return (
-        <div className="h-screen bg-black w-screen " id="MemoryCard">
+        <div className="h-screen bg-black w-screen sm:overflow-hidden" id="MemoryCard">
           <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
         </div>
       );

@@ -26,7 +26,7 @@ function ThreeDModel({
     });
     
     useFrame(({ clock }) => {
-      model.current.rotation.y = 0 - clock.getElapsedTime() / 3;
+      model.current.rotation.y = 0 + clock.getElapsedTime() / 2;
     });
 
     obj = obj.clone();

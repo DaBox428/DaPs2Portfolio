@@ -9,7 +9,7 @@ const ModelArray = [
     meshTexture: "../information/tex.png",
     title: "Information",
     description:
-      "Welcome to my website! I'm Mike, i'm a developer and im enthusiastic about design, videogames and digital experiences. ",
+      "Welcome to my website! \n I'm Mike, i'm a developer and im enthusiastic about design, videogames. ",
     link: "https://github.com/DaBox428",
   },
   

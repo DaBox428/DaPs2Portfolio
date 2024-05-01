@@ -6,40 +6,46 @@ import "../App.css";
 function PreLoader({ onClick }) {
   const [changeIconAnim, setchangeIconAnim] = useState(false);
 
+  const [isBig, setIsBig] = useState(false);
+
+
   const [fadeOut, setfadeOut] = useState(false);
 
   const divRef = useRef();
   function handleAnimation() {
-    /* setchangeIconAnim(true); */
+    setchangeIconAnim(true)
     setfadeOut(true);
 
     setTimeout(() => {
       onClick();
-    }, 1000 /* 9000 */);
+    }, 2000 /* 9000 */);
   }
 
   return (
     <div
       ref={divRef}
       className={`bg-black h-screen w-screen overflow-hidden 
-        transition-all duration-700    ${
+        transition-all duration-[2000ms]    ${
           fadeOut ? "opacity-0" : "opacity-100"
         }`}
     >
       <div
-        className="flex  flex-col min-h-screen min-w-screen justify-center items-center overflow-y-hidden"
+        className="flex  flex-col min-h-screen min-w-screen justify-center items-center overflow-hidden place-content-evenly"
         onClick={handleAnimation}
         style={{ cursor: "pointer" }}
       >
         <FontAwesomeIcon
           icon={faCompactDisc}
-          size="7x"
+          size={"7x"}
           style={{ color: "#FFFFFF", cursor: "pointer" }}
-          spin={!changeIconAnim}
-          beat={changeIconAnim}
+          spin={changeIconAnim}
+          onMouseEnter={() => setIsBig(true)}
+          onMouseLeave={() => setIsBig(false)}
+          className=""
+          
         />
-        <p className="m-4 text-sky-800 text-2xl font-extrabold font-sans">
-          Insert Disk
+        <p className="m-8 text-sky-800 text-2xl font-extrabold font-sans flex flex-col animate-pulse tracking-[.15em]">
+          Please Insert Disk. . .
         </p>
       </div>
     </div>

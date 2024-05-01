@@ -17,7 +17,7 @@ import ModelArray from "./ModelArray";
 function Loader() {
   const { progress } = useProgress();
   return (
-    <Html center className=" text-yellow-400">
+    <Html center className="text-yellow-400 text-3xl font-extrabold font-sans font-outline-2 tracking-[.11em] ">
       {progress} % loaded
     </Html>
   );
@@ -29,7 +29,10 @@ function MemoryCard() {
   const [selectedModelUrl, setSelectedModelUrl] = useState("");
 
   function handleOnClickModal(modelUrl) {
-    setSelectedModelUrl(modelUrl);
+    if(modelUrl) {
+      setSelectedModelUrl(modelUrl);
+    }
+    
     if (!dialogRef.current) {
       return;
     }
@@ -41,7 +44,7 @@ function MemoryCard() {
   return (
     <div
       className={`flex sm:h-screen sm:w-screen sm:max-h-screen sm:max-w-screen bg-gradient-to-br from-slate-300 to-black 
-      h-dvh}`}
+      h-dvh }`}
       style={{ animation: "fadeIn 5s" }}
     >
       <div className="md:mt-16 md:ml-20 absolute flex ml-8 sm:ml-auto mt-12">

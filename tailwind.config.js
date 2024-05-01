@@ -5,7 +5,17 @@ export default {
     fontFamily: {
       sans: ["Helvetica", "Arial", "sans-serif"],
     },
-    extend: {},
+    extend: { animation: {
+      modalf: "modalf 0.50s ease-in-out",
+      },
+      keyframes: {
+          modalf: {
+              "0%": { opacity: "0" },
+              "100%": {  opacity: "1" },
+          },
+  },},
   },
   plugins: [],
 };
+
+
