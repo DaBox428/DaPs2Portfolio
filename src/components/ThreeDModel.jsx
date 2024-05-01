@@ -14,6 +14,8 @@ function ThreeDModel({
 
   ...props
 }) {
+
+
   const colorMap = useLoader(TextureLoader, meshTexture);
   let obj = useFBX(modelUrl);
   const model = useRef();
@@ -42,7 +44,7 @@ function ThreeDModel({
   return (
     <>
       {isHovered && !props.repeat && (
-        <mesh position={[0,0,50]}>
+        <mesh position={[0,0,70]}>
           <sphereGeometry args={[30]} />
           <meshStandardMaterial
             color={0xffffff}
@@ -50,9 +52,11 @@ function ThreeDModel({
             opacity={1}
           />
           <FakeGlowMaterial
-            falloff={1}
+            falloff={0.2}
             glowSharpness={0.8}
             glowColor="#588ed5"
+            opacity={1}
+            glowInternalRadius={4}
           ></FakeGlowMaterial>
 
           <directionalLight intensity={1} color={0x7cb2e8} />

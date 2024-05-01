@@ -74,7 +74,7 @@ function MemoryCard() {
               >
                 <Canvas camera={{ fov: 50, position: [0, 0, 350] }}>
                   <Suspense fallback={<Loader />}>
-                    {/* <OrbitControls></OrbitControls> */}
+                    {/* {<OrbitControls></OrbitControls>} */}
                     <ambientLight intensity={1.5} />
                     <Environment preset="studio" />
 
