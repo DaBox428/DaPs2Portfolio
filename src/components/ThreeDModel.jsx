@@ -14,24 +14,17 @@ function ThreeDModel({
 
   ...props
 }) {
-
-
   const colorMap = useLoader(TextureLoader, meshTexture);
   let obj = useFBX(modelUrl);
   const model = useRef();
-  if (props.repeat) {
 
-    useEffect(() => {
-      model.current.rotation.y = 0
-    });
-    
+  if (props.repeat) {
     useFrame(({ clock }) => {
       model.current.rotation.y = 0 + clock.getElapsedTime() / 2;
     });
 
     obj = obj.clone();
   } else {
-
   }
 
   const [isHovered, setIsHovered] = useState(false);
@@ -44,7 +37,7 @@ function ThreeDModel({
   return (
     <>
       {isHovered && !props.repeat && (
-        <mesh position={[0,0,70]}>
+        <mesh position={[0, 0, 70]}>
           <sphereGeometry args={[30]} />
           <meshStandardMaterial
             color={0xffffff}
@@ -63,7 +56,7 @@ function ThreeDModel({
         </mesh>
       )}
 
-      <mesh ref={model} >
+      <mesh ref={model}>
         <primitive
           onClick={() => handleOnClickModal(modelUrl)}
           onPointerOver={() => handleSetIsHoeverd(true)}
@@ -73,7 +66,12 @@ function ThreeDModel({
           rotation={modelRotation}
           position={modelPosition}
         />
-        <meshBasicMaterial map={colorMap} toneMapped={false}  transparent={false} opacity={1}/>
+        <meshBasicMaterial
+          map={colorMap}
+          toneMapped={false}
+          transparent={false}
+          opacity={1}
+        />
       </mesh>
     </>
   );
