@@ -22,7 +22,7 @@ const ModalDialog = forwardRef((props, ref) => {
     >
       {modelUrl && (
         <div className="flex flex-col sm:flex-row w-screen max-h-screen items-center 2xl:justify-center ">
-          <div className="border sm:w-40 sm:h-40 md:w-60 md:h-60 xl:w-80 xl:h-80 2xl:w-150 2xl:h-150">
+          <div className=" sm:w-40 sm:h-40 md:w-60 md:h-60 xl:w-80 xl:h-80 2xl:w-150 2xl:h-150">
             <Canvas camera={{ fov: 70, position: [0, 0, 200] }}>
               <Suspense fallback={<Loader />}>
                 {/* <OrbitControls></OrbitControls> */}
@@ -71,7 +71,10 @@ const ModalDialog = forwardRef((props, ref) => {
       )}
       <div className="py-8 xl:mx-64 mx-0 justify-center items-center text-white md:text-2xl text-md font-extrabold font-sans font-outline-2 tracking-[.11em] ">
         <form method="dialog">
-          <div className="flex flex-row justify-center items-center sm:mt-0 mt-2 mx-20 my-10 sm:my-0" onClick={()  => props.handleOnClickModal(false)}>
+          <div
+            className="flex flex-row justify-center items-center sm:mt-0 mt-2 mx-20 my-10 sm:my-0"
+            onClick={() => props.handleOnClickModal(false)}
+          >
             <img src={circleImage} className="sm:max-w-14 max-w-8" />
             <button className="px-3 sm:text-xl text-2xl">Back</button>
           </div>

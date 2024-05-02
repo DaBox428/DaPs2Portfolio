@@ -9,8 +9,8 @@ const ModelArray = [
     meshTexture: "../Ps2React/information/tex.png",
     title: "Information",
     description:
-      "Welcome to my website! \n I'm Mike, i'm a developer and im enthusiastic about design, videogames. ",
-    link: "https://github.com/DaBox428",
+      "Welcome to my website.\n I'm Mike, i'm a developer based in Uruguay",
+    link: "",
   },
 
   {
@@ -20,7 +20,7 @@ const ModelArray = [
     modelScale: 0.9,
     meshTexture: "../Ps2React/github/tex.png",
     title: "Github",
-    description: "You can check out my other projects in my Github below",
+    description: "You can check out my other projects in my Github: ",
     link: "https://github.com/DaBox428",
   },
 
@@ -32,7 +32,7 @@ const ModelArray = [
     modelScale: 0.9,
     meshTexture: "../Ps2React/kidbuu/Binary_0.png",
     title: "Kid Buu fighterZ 3d printable model",
-    description: "I made a 3d model, you can print it here:",
+    description: "I made a 3d model, you can print it here: ",
     link: "https://www.thingiverse.com/thing:4631213",
   },
   {
