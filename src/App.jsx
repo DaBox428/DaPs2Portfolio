@@ -323,8 +323,11 @@ function App() {
       );
     } else if (showScreen == "1") {
       return (
-        <div className="h-screen bg-black w-screen sm:overflow-hidden" id="MemoryCard">
-          <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>;
+        <div
+          className="h-screen bg-black w-screen sm:overflow-hidden"
+          id="MemoryCard"
+        >
+          <MemoryCard handleChangeScreen={handleChangeScreen}></MemoryCard>
         </div>
       );
     } else {
