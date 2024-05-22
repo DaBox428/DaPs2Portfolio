@@ -2,6 +2,8 @@ import React, { useRef } from "react";
 
 import { useFrame } from "@react-three/fiber";
 
+/* comment to force update */
+
 function GlassCubes() {
   const navigatorWidth = window.innerWidth;
 
